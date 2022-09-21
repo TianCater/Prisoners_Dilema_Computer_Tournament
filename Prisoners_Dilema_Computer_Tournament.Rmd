@@ -1,0 +1,192 @@
+---
+# IMPORTANT: Change settings here, but DO NOT change the spacing.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: "Beyond Tit-for-Tat: A repeated prisoner's dilemma computer tournament"
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Nico Katzke}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Joshua Strydom^[17 August 2022]"  # First Author - note the thanks message displayed as an italic footnote of first page.
+Ref1: "Advanced Microeconomics First Proposal: Group 2" # First Author's Affiliation
+Email1: "20718284\\@sun.ac.za" # First Author's Email address
+
+Author2: "Tian Cater"
+#Ref2: "Some other Institution, Cape Town, South Africa"
+Email2: "19025831\\@sun.ac.za"
+CommonAffiliation_12: TRUE # If Author 1 and 2 have a common affiliation. Works with _13, _23, etc.
+
+Author3: "Sven Wellman"
+Email3: "20850980\\@sun.ac.za"
+CommonAffiliation_13: TRUE # If Author 1 and 2 have a common affiliation. Works with _13, _23, etc.
+
+CorrespAuthor_1: FALSE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
+
+# Comment out below to remove both. JEL Codes only given if keywords also given.
+#keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
+#JELCodes: "L250 \\sep L100"
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+#nocite: '@*' # Add all items in bibliography, whether cited or not
+# nocite: |  # add specific references that aren't cited
+#  @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.2                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+header-includes:
+    - \usepackage{colortbl} # Add additional packages here.
+    - \usepackage{booktabs}
+    - \usepackage{longtable}
+    - \usepackage{array}
+    - \usepackage{multirow}
+    - \usepackage{wrapfig}
+    - \usepackage{float}
+    - \usepackage{colortbl}
+    - \usepackage{pdflscape}
+    - \usepackage{tabu}
+    - \usepackage{threeparttable}
+    - \usepackage{threeparttablex}
+    - \usepackage[normalem]{ulem}
+    - \usepackage{makecell}
+    - \usepackage{xcolor}
+
+output:
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+#abstract: |
+---
+
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+# Note: Include = FALSE implies the code is executed, but not printed in your pdf.
+# warning and message = FALSE implies ugly messages and warnings are removed from your pdf.
+# These should be picked up when you execute the command chunks (code sections below) in your rmd, not printed in your paper!
+
+# Lets load in example data, and see how this can be stored and later called from your 'data' folder.
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+Example_data <- Texevier::Ex_Dat
+
+pacman::p_load(kableExtra)
+
+# Notice that as you are working in a .Rproj file (I am assuming you are) - the relative paths of your directories start at your specified root.
+# This means that when working in a .Rproj file, you never need to use getwd() - it is assumed as your base root automatically.
+write_rds(Example_data, path = "data/Example_data.rds")
+
+```
+
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+# The Roles Assigned To Each Member
+
+Through a collective effort, our group has managed to program the code for the computer tournament fully. Even though the exact specification of the game’s rules (for example, number of iterations, number of strategies, imperfect information regarding number of iterations etc.) has not yet been finalised, our model’s flexibility allows for effortless adjustment of the rules.
+
+In the next phase, all members will collectively investigate the intricacies surrounding different strategies under divergent circumstances to narrow our research question and potentially submit a competitive strategy of our own design for the tournament. 
+
+# What is the Prisoner's Dilemma?
+
+A prisoner’s dilemma is a non-zero-sum game in which players attempt to maximise their advantage without concern for the well-being of the other players. Each player has two choices, either cooperate or defect. The players have no way of communicating their intentions. In equilibrium, each prisoner chooses to defect even though the joint payoff would be higher by cooperating. Unfortunately for the prisoners, each is incentivised to cheat even after promising to cooperate. This is the heart of the dilemma. 
+
+# Our (Preliminary) Plan
+
+This paper conducts a computer tournament to study effective choice in the iterated prisoner’s dilemma game. Drawing from @axelrod1980's computer tournament, we will distinguish between two types of games, one in which the number of rounds played is known by each player (or strategy) beforehand, (Round 1) and the other where it is determined probabilistically, effectively purging some minor end-game effects (Round 2). Both games allow for mutual gains from cooperation and possible exploitation of a strategy by another strategy. A preliminary observation is that there is no one best strategy. Table \ref{Figure1} provides a summary of some of the most competitive strategies that have been played. 
+
+```{r, warning =  FALSE, fig.align = 'center'}
+
+text_tbl <- data.frame(
+Strategy = c("Tit-for-Tat (TFT)", "Generous TFT", "Tit-for-Two-Tat","DOWNING","JOSS","AllC","AllD","Alternate","Grudger","Random","Detective","Win-Stay-Lose-Shift"),
+Description = c(
+"Begins by cooperating and then simply repeats the last moves made by the opponent.",
+"Same as TFT but 'forgives' defections in 1/3 of cases.",
+"Like TFT but only retaliates after two defections rather than one.",
+"Based on outcome maximization principle, if other player is responsive to DOWNING, it will cooperate, if not, will defect.",
+"This strategy plays Tit For Tat, always defecting if the opponent defects but cooperating when the opponent cooperates with probability .9.",
+"Always cooperates.",
+"Always defects.",
+"Randomly cooperate or defect (prob = 1/2) on the 1st round then alternates regardless of what the opponent does.",
+"Cooperates until the opponent defects and then defects forever.",
+"This strategy plays randomly (prob = 1/2) disregarding the history of play.",
+"Cooperates, defects, cooperates and cooperates again. If the opponent doesn't relatilates in the 3rd round, defects all the time;otherwise plays Tit-for-Tat.",
+" Cooperates first then, if the opponent cooperated on the last round, repeat last move; otherwise, switch.")
+)
+
+kbl(text_tbl, booktabs = T, caption = "Some strategies played in past computer tournaments \\label{Figure1}") %>%
+kable_styling(full_width = F) %>%
+column_spec(1, bold = T) |> 
+column_spec(2, width = "30em") |> 
+    footnote(general = "There are many more prominent strategies that have proven to be effective, and will be considered in the final simulation of the tournament.",threeparttable = T)
+
+```
+
+For Round 1, in which the number of rounds is known, the programmed strategies play against each other. Each program has information on the history of past interactions and can make choices based on this. @axelrod1980's computer tournament found that the properties of ‘being nice’ and ‘being forgiving’ positively influences the utility points ‘scored’ by each strategy. A 'friendly' means that a strategy is not the first to defect before the last few moves, and being forgiving means that a process has a propensity to cooperate after another strategy playing defect. @axelrod1987evolution found defection to be the best strategy when playing the prisoner’s dilemma with a fixed, finite, and known number of rounds. This is because there are end game effects by which players have an incentive to defect to gain an extra payoff. The Tit-for-Tat strategy came out on top as the winner. These results are, however, not definitive.
+
+For Round 2, the end game effects will be effectively eliminated as the game’s length was determined probabilistically. The players will be assumed to know which strategies performed well in Round 1. In addition, each program has information on the history of past plays and analysis of Round 1. As in Round 1, the ‘being nice’ property positively correlates with how well a strategy performed. Again, in @axelrod1980's tournament, the Tit-for-Tat strategy came out on top as the winner. There is said to be no best rule independent of the environment. Tit-for-Tat is a very robust strategy as it combines being nice, retaliatory, forgiving and clear.
+
+\newpage
+
+# References {-}
+
+<div id="refs"></div>
+
+
+
