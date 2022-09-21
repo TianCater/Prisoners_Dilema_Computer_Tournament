@@ -6,6 +6,8 @@ date: "2022-08-16"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+pacman::p_load(kable, tidyverse, kableExtra)
 ```
 
 ## Purpose
@@ -679,7 +681,7 @@ sort(rowMeans(ans, na.rm = TRUE))
 
 ```
 
-```{r, Just a Demo make sure you don't run before checking all the code}
+```{r, Just a Demo make sure you dont run before checking all the code, eval=FALSE}
 
 # -------------------------------------------------------------------------- #
 # Tit-for-Tat (a.k.a 'Copycat')
@@ -801,7 +803,7 @@ gtft = function(p, o) {
 	r <- length(p)+1
 	res <- TRUE
 	if(r > 1 && !tail(o, 1)) {
-		res <- sample(c(F, T), 1,, 2:1/3) 
+		res <- sample(c(F, T), 1,2:1/3) 
 	}	
 	res
 }
@@ -878,8 +880,7 @@ gtft = function(p, o) {
 # .evolution
 # -------------------------------------------------------------------------- #
 
-#.evolution = function(x, pop = 1, n = 200, t = 5, r = 3, p = 1,
-	s = 0, n.min = 100, n.max = 1000, cols = NULL, brk = 100) {
+#.evolution = function(x, pop = 1, n = 200, t = 5, r = 3, p = 1,s = 0, n.min = 100, n.max = 1000, cols = NULL, brk = 100) {
 	
 	if(is.null(cols)) cols <- rainbow(length(x))
 	if(length(pop) == 1) pop <- rep(pop, length(x))
@@ -921,7 +922,7 @@ gtft = function(p, o) {
 		res[i] <- length(ix[ix == i])
 	}
 	res
-}
+#}
 
 ```
 
