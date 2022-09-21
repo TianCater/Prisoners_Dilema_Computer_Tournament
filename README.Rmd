@@ -10,12 +10,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Purpose
 
+This paper conducts a computer tournament to study effective choice in the iterated prisoner’s dilemma
+game. Drawing from Axelrod (1980)’s computer tournament, we will distinguish between two types of
+games, one in which the number of rounds played is known by each player (or strategy) beforehand,
+(Round 1) and the other where it is determined probabilistically, effectively purging some minor end-
+game effects (Round 2). Both games allow for mutual gains from cooperation and possible exploitation
+of a strategy by another strategy. A preliminary observation is that there is no one best strategy.
+Table 3.1 provides a summary of some of the most competitive strategies that have been played.
+
 The code below programs a Repeated Prisoner's Dilemma Computer Game for multiple strategies to compete against one another. 
 
 NB --- Dont run the last code chunk before you have investigated the "demo" code in more detail. 
 
+NB --- To get the PDF of the final project, Knit the Rmd file (not this README). ALSO, dont commit to github the this PDF, first delete it before committing to this repository.
 
-```{r}
+
+```{r, Table of strategies}
 text_tbl <- data.frame(
 Strategy = c("Tit-for-Tat (TFT)", "Generous TFT", "Tit-for-Two-Tat","DOWNING","JOSS","AllC","AllD","Alternate","Grudger","Random","Detective","Win-Stay-Lose-Shift"),
 Description = c(
@@ -41,7 +51,7 @@ column_spec(1, bold = T)
 ```
 
 
-```{r, Strategies}
+```{r, Strategies Code}
 
 # ========================================================================== #
 # Basic algos
@@ -669,7 +679,7 @@ sort(rowMeans(ans, na.rm = TRUE))
 
 ```
 
-```{r, Just a Demo, make sure you don't run before checking all the code}
+```{r, Just a Demo make sure you don't run before checking all the code}
 
 # -------------------------------------------------------------------------- #
 # Tit-for-Tat (a.k.a 'Copycat')
